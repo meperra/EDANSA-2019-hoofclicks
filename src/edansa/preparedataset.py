@@ -261,6 +261,9 @@ def setup():
         'songbird': '1.1.10',
         'unknown': 'X.X.X',
         'water': '2.2.0',
+        'Hoofclick': '5.0.0' #New Caribou labels
+        'Vocal': '5.0.1'
+        'Burps': '5.0.2'
         'x': 'X.X.X',
     }
     return (taxonomy_file_path, csv4megan_excell_clenaed, ignore_files,
