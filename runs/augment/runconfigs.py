@@ -126,8 +126,8 @@ EXCELL_NAMES2CODE = {
     'mosq': '1.3.1',
     'wind': '2.3.0',
     'windy': '2.3.0',
-    'Hoofclick': '5.0.0', #New Caribou labels
-    'Vocal': '5.0.1',
-    'Burps': '5.0.2',
-    'Chewing': '5.0.3'
+    'Hoofclick': '4.0.0',  #New Caribou labels
+    'Vocal': '5.0.0',
+    'Burps': '6.0.0',
+    'Chewing': '7.0.0'
 }

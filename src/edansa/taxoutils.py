@@ -126,7 +126,7 @@ def megan_excell_row2yaml_code(row: Dict,
     '''
     if excell_names2code is None:
         excell_names2code = {
-            'Hoofclick': '5.0.0', #New Caribou labels
+            'Hoofclick': '5.0.0',  #New Caribou labels
             'Vocal': '5.0.1',
             'Burps': '5.0.2',
             'Chewing': '5.0.3',
@@ -372,7 +372,7 @@ excell_all_headers = [
     'Mosq',
     'Fly',
     'Hoofclick',  #New Caribou labels
-    'Vocal', 
+    'Vocal',
     'Burps',
     'Chewing',
     'Clip Path',
@@ -438,7 +438,7 @@ excell_label_headers = [
     'Mosq',
     'Fly',
     'Hoofclick',  #New Caribou labels
-    'Vocal', 
+    'Vocal',
     'Burps',
     'Chewing',
 ]
@@ -573,10 +573,10 @@ excell_names2code = {
     'mosq': '1.3.1',
     'wind': '2.3.0',
     'windy': '2.3.0',
-    'Hoofclick': '5.0.0', #New Caribou labels
-    'Vocal': '5.0.1',
-    'Burps': '5.0.2',
-    'Chewing': '5.0.3',
+    'Hoofclick': '4.0.0',  #New Caribou labels
+    'Vocal': '5.0.0',
+    'Burps': '6.0.0',
+    'Chewing': '7.0.0'
 }
 
 taxo_code2excell_names = {
@@ -631,8 +631,8 @@ taxo_code2excell_names = {
     '1.2.8': 'Shrew',
     '1.3.1': 'Mosq',
     '1.3.2': 'Fly',
-    '5.0.0': 'Hoofclick', #New Caribou labels
-    '5.0.1': 'Vocal',
-    '5.0.2': 'Burps',
-    '5.0.3': 'Chewing',
+    '5.0.0': 'Hoofclick',  #New Caribou labels
+    '6.0.0': 'Vocal',
+    '7.0.0': 'Burps',
+    '8.0.0': 'Chewing',
 }
