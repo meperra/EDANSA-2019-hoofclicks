@@ -51,6 +51,7 @@ def prepare_dataset(dataset_in_memory=True, load_clipping=True):
     dataset_name_v = runconfigs.DATASET_NAME_V
     dataset_cache_folder = runconfigs.DATASET_CACHE_FOLDER
     target_taxo = runconfigs.TARGET_TAXO
+    dataset_folder = runconfigs.DATASET_FOLDER
 
     audio_dataset, deleted_files = edansa.preparedataset.run(  # type: ignore
         dataset_csv_path,
@@ -63,7 +64,8 @@ def prepare_dataset(dataset_in_memory=True, load_clipping=True):
         dataset_name_v=dataset_name_v,
         dataset_cache_folder=dataset_cache_folder,
         load_clipping=load_clipping,
-        target_taxo=target_taxo)
+        target_taxo=target_taxo
+        dataset_folder=dataset_folder)
 
     if dataset_in_memory:
         audio_dataset.load_audio_files(runconfigs.AUDIO_DATA_CACHE_PATH)

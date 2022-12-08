@@ -257,6 +257,7 @@ def run(
         excerpt_len=excerpt_length,
         dataset_cache_folder=dataset_cache_folder,
         excell_names2code=excell_names2code,
+        dataset_folder=dataset_folder,
         taxonomy_file_path=taxonomy_file_path,
         target_taxo=target_taxo,
     )
