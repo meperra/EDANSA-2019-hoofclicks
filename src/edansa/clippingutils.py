@@ -105,7 +105,7 @@ def load_audio(
             # sound_array = sound_array.astype(np.int16)
     elif backend == "pydub":
         from pydub import AudioSegment
-        AudioSegment.converter = '/home/enis/sbin/ffmpeg'
+        # AudioSegment.converter = '/home/enis/sbin/ffmpeg'
         sound_array = AudioSegment.from_file(filepath)
         sr = sound_array.frame_rate
         channels = sound_array.channels
