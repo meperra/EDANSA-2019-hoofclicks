@@ -418,7 +418,10 @@ def run_exp(wandb_logger_ins):
     ]
 
     # label indexs we cannot mix with other labels
-    non_associative_labels = [target_taxo.index(i) for i in ['3.0.0']]
+    if ['3.0.0'] in target_taxo:
+        non_associative_labels = [target_taxo.index(i) for i in ['3.0.0']]
+    else:
+        non_associative_labels = []
     # geo_labels = [target_taxo.index(i) for i in ['2.0.0', '2.1.0', '2.3.0']]
 
     # 0.0.0 anthrophony
