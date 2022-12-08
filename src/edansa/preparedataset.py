@@ -214,65 +214,6 @@ def delete_samples_by_length_limit(audio_dataset, sample_length_limit):
 
 
 #%%
-def setup():
-    # runconfigs.py example for debugging ########
-    TAXO_COUNT_LIMIT = 25
-    SAMPLE_LENGTH_LIMIT = 10
-    DATASET_NAME_V = 'megan_v2'
-
-    # ########
-
-    taxo_count_limit = TAXO_COUNT_LIMIT
-    sample_length_limit = SAMPLE_LENGTH_LIMIT
-
-    taxonomy_file_path = Path(
-        '/home/enis/projects/nna/src/nna/assets/taxonomy/taxonomyv2.yaml')
-
-    src_path = '/scratch/enis/data/nna/labeling/megan/AudioSamplesPerSite/'
-    # megan_labeled_files_info_path = src_path + 'meganLabeledFiles_wlenV1.txt'
-
-    resources_folder = ('/scratch/enis/archive/' +
-                        'forks/cramer2020icassp/resources/')
-    # csv4megan_excell = (resources_folder + 'Sheet1.csv')
-    csv4megan_excell_clenaed = (resources_folder + 'Sheet1(1).csv')
-
-    ignore_files = set([
-        'S4A10268_20190610_103000_bio_anth.wav',  # has two topology bird/plane
-    ])
-    excerpt_length = 10
-    excell_names2code = {
-        'anth': '0.0.0',
-        'auto': '0.1.0',
-        'bio': '1.0.0',
-        'bird': '1.1.0',
-        'bug': '1.3.0',
-        'dgs': '1.1.7',
-        'flare': '0.4.0',
-        'fox': '1.2.4',
-        'geo': '2.0.0',
-        'grouse': '1.1.8',
-        'loon': '1.1.3',
-        'mam': '1.2.0',
-        'plane': '0.2.0',
-        'ptarm': '1.1.8',
-        'rain': '2.1.0',
-        'seab': '1.1.5',
-        'silence': '3.0.0',
-        'songbird': '1.1.10',
-        'unknown': 'X.X.X',
-        'water': '2.2.0',
-        'Hoofclick': '5.0.0', #New Caribou labels
-        'Vocal': '5.0.1',
-        'Burps': '5.0.2',
-        'Chewing': '5.0.3',
-        'x': 'X.X.X',
-    }
-    return (taxonomy_file_path, csv4megan_excell_clenaed, ignore_files,
-            excerpt_length, excell_names2code, sample_length_limit,
-            taxo_count_limit, DATASET_NAME_V)
-
-
-#%%
 def load_csv(csv_path):
     with open(csv_path) as csvfile:
         reader = csv.DictReader(csvfile)
@@ -332,25 +273,3 @@ def run(
                      sample_not_long_enough + deleted_samples_not_labeled +
                      deleted_samples_w_no_taxo)
     return audio_dataset, deleted_files
-
-
-#%%
-# def main():
-#     (megan_labeled_files_info_path, taxonomy_file_path,
-#      csv4megan_excell_clenaed, ignore_files, excerpt_length, excell_names2code,
-#      sample_length_limit, taxo_count_limit, DATASET_NAME_V) = setup()
-
-#     audio_dataset, deleted_files = run(megan_labeled_files_info_path,
-#                                        taxonomy_file_path,
-#                                        csv4megan_excell_clenaed,
-#                                        ignore_files,
-#                                        excerpt_length,
-#                                        sample_length_limit,
-#                                        taxo_count_limit,
-#                                        excell_names2code=excell_names2code,
-#                                        dataset_name_v=DATASET_NAME_V)
-
-#     return audio_dataset, deleted_files
-
-# if __name__ == '__main__':
-#     main()
