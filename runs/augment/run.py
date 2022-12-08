@@ -10,6 +10,7 @@ import torch.nn as nn
 from torchvision import transforms
 
 import numpy as np
+from sklearn.model_selection import train_test_split
 
 from pathlib import Path
 from collections import Counter
@@ -150,38 +151,19 @@ def create_multi_label_vector(alphabet, y_data):
     return onehot_encoded
 
 
-def split_train_test_val(x_data,
-                         location_id_info,
-                         onehot_encoded,
-                         loc_per_set,
-                         data_by_reference=False):
+def split_train_test_val(x_data, onehot_encoded, data_by_reference=False):
     X_train, X_test, X_val, y_train, y_test, y_val = [], [], [], [], [], []
-    loc_id_train = []
-    loc_id_test = []
-    loc_id_valid = []
 
-    for sample, y_val_ins, loc_id in zip(x_data, onehot_encoded,
-                                         location_id_info):
-        if loc_id in loc_per_set[0]:
-            X_train.append(sample)
-            y_train.append(y_val_ins)
-            loc_id_train.append(loc_id)
-        elif loc_id in loc_per_set[1]:
-            X_test.append(sample)
-            y_test.append(y_val_ins)
-            loc_id_test.append(loc_id)
-        elif loc_id in loc_per_set[2]:
-            X_val.append(sample)
-            y_val.append(y_val_ins)
-            loc_id_valid.append(loc_id)
-        # else:
-        #     X_train.append(sample)
-        #     y_train.append(y_val_ins)
-        #     loc_id_train.append(loc_id)
-        # print(
-        #     f'WARNING: ' +
-        #     f'This sample is NOT from a location ({loc_id}) that is from ' +
-        #     f'pre-determined training,test,validation locations')
+    X_train, X_test, y_train, y_test = train_test_split(x_data,
+                                                        onehot_encoded,
+                                                        test_size=0.7,
+                                                        random_state=42)
+
+    X_train, X_val, y_train, y_val = train_test_split(X_train,
+                                                      y_train,
+                                                      test_size=0.5,
+                                                      random_state=42)
+
     if not data_by_reference:
         X_train, X_test, X_val = np.array(X_train), np.array(X_test), np.array(
             X_val)
@@ -395,45 +377,19 @@ def run_exp(wandb_logger_ins):
 
     config = wandb_logger_ins.config
 
-    # dataset split by location
-    not_original_train_set = [('anwr', '35'), ('anwr', '42'), ('anwr', '43'),
-                              ('dalton', '01'), ('dalton', '02'),
-                              ('dalton', '03'), ('dalton', '04'),
-                              ('dalton', '05'), ('dalton', '06'),
-                              ('dalton', '07'), ('dalton', '08'),
-                              ('dalton', '09'), ('dalton', '10'),
-                              ('dempster', '11'), ('dempster', '12'),
-                              ('dempster', '13'), ('dempster', '14'),
-                              ('dempster', '15'), ('dempster', '16'),
-                              ('dempster', '17'), ('dempster', '19'),
-                              ('dempster', '20'), ('dempster', '21'),
-                              ('dempster', '22'), ('dempster', '23'),
-                              ('dempster', '24'), ('dempster', '25'),
-                              ('ivvavik', 'AR01'), ('ivvavik', 'AR04'),
-                              ('ivvavik', 'AR06'), ('ivvavik', 'SINP01'),
-                              ('ivvavik', 'SINP03'), ('ivvavik', 'SINP04'),
-                              ('ivvavik', 'SINP05'), ('ivvavik', 'SINP06'),
-                              ('ivvavik', 'SINP07'), ('ivvavik', 'SINP08'),
-                              ('ivvavik', 'SINP09'), ('ivvavik', 'SINP10'),
-                              ('prudhoe', '23'), ('prudhoe', '28')]
-    loc_per_set = [
-        not_original_train_set + [('anwr', '41'), ('prudhoe', '21'),
-                                  ('anwr', '49'), ('anwr', '48'),
-                                  ('prudhoe', '19'), ('prudhoe', '16'),
-                                  ('anwr', '39'), ('prudhoe', '30'),
-                                  ('anwr', '38'), ('prudhoe', '22'),
-                                  ('prudhoe', '11'), ('anwr', '37'),
-                                  ('anwr', '44'), ('anwr', '33'),
-                                  ('prudhoe', '29'), ('anwr', '46'),
-                                  ('prudhoe', '25'), ('prudhoe', '13'),
-                                  ('prudhoe', '24'), ('prudhoe', '17'),
-                                  ('anwr', '40'), ('prudhoe', '14')],
-        [('prudhoe', '15'), ('prudhoe', '20'), ('anwr', '31'), ('anwr', '47'),
-         ('anwr', '34')],
-        [('prudhoe', '12'), ('prudhoe', '27'), ('prudhoe', '26'),
-         ('anwr', '45'), ('anwr', '50'), ('prudhoe', '18'), ('anwr', '32'),
-         ('anwr', '36')]
-    ]
+    loc_per_set = [[('anwr', '41'), ('prudhoe', '21'), ('anwr', '49'),
+                    ('anwr', '48'), ('prudhoe', '19'), ('prudhoe', '16'),
+                    ('anwr', '39'), ('prudhoe', '30'), ('anwr', '38'),
+                    ('prudhoe', '22'), ('prudhoe', '11'), ('anwr', '37'),
+                    ('anwr', '44'), ('anwr', '33'), ('prudhoe', '29'),
+                    ('anwr', '46'), ('prudhoe', '25'), ('prudhoe', '13'),
+                    ('prudhoe', '24'), ('prudhoe', '17'), ('anwr', '40'),
+                    ('prudhoe', '14')],
+                   [('prudhoe', '15'), ('prudhoe', '20'), ('anwr', '31'),
+                    ('anwr', '47'), ('anwr', '34')],
+                   [('prudhoe', '12'), ('prudhoe', '27'), ('prudhoe', '26'),
+                    ('anwr', '45'), ('anwr', '50'), ('prudhoe', '18'),
+                    ('anwr', '32'), ('anwr', '36')]]
     target_taxo = [
         '1.0.0', '1.1.0', '1.1.10', '1.1.7', '0.0.0', '1.3.0', '1.1.8', '0.2.0',
         '3.0.0', '4.0.0', '5.0.0', '6.0.0', '7.0.0'
@@ -519,11 +475,7 @@ def run_exp(wandb_logger_ins):
     #     multi_label_vector = multi_label_vector_flipped
 
     X_train, X_test, X_val, y_train, y_test, y_val = split_train_test_val(
-        x_data,
-        location_id_info,
-        multi_label_vector,
-        loc_per_set,
-        data_by_reference=DATA_BY_REFERENCE)
+        x_data, multi_label_vector, data_by_reference=DATA_BY_REFERENCE)
 
     model, optimizer, dataloaders, metrics, criterion = prepare_run_inputs(
         config,
