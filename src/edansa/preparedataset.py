@@ -261,13 +261,13 @@ def run(
         target_taxo=target_taxo,
     )
     megan_data_sheet, deleted_files = load_labeled_info(
-        dataset_rows, audio_dataset, ignore_files=ignore_files)
+        megan_data_sheet, audio_dataset, ignore_files=ignore_files)
 
-    audio_dataset.excerpt_length = excerpt_length
-    audio_dataset.excell_names2code = excell_names2code  # type: ignore
+    # audio_dataset.excerpt_length = excerpt_length
+    # audio_dataset.excell_names2code = excell_names2code  # type: ignore
 
-    load_taxonomy2dataset(taxonomy_file_path, audio_dataset)
-    add_taxo_code2dataset(megan_data_sheet, audio_dataset, version=version)
+    # load_taxonomy2dataset(taxonomy_file_path, audio_dataset)
+    # add_taxo_code2dataset(megan_data_sheet, audio_dataset, version=version)
 
     deleted_samples_not_labeled = del_samples_not_labeled(
         audio_dataset, megan_data_sheet)
