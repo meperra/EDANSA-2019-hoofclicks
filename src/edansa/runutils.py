@@ -494,15 +494,16 @@ class AugmentingAudioDataset(Dataset):
         # if only one of them is 1 then y is one anyway
         # so we just change 2s to 1
         y_merged[y_merged == 2.0] = 1
-        silence_index = non_associative_labels[0]
-        y_merged = self.flip_coin_for_silence(y_merged, silence_index)
-        # if silence is picked, then we need to use only silent sample
-        # if both are silent, then we need to use both
-        if y_merged[silence_index] == 1:
-            if left_y[silence_index] == 1 and right_y[silence_index] == 1:
-                x = x
-            else:
-                x = left if left_y[silence_index] == 1 else right
+        if non_associative_labels:
+            silence_index = non_associative_labels[0]
+            y_merged = self.flip_coin_for_silence(y_merged, silence_index)
+            # if silence is picked, then we need to use only silent sample
+            # if both are silent, then we need to use both
+            if y_merged[silence_index] == 1:
+                if left_y[silence_index] == 1 and right_y[silence_index] == 1:
+                    x = x
+                else:
+                    x = left if left_y[silence_index] == 1 else right
 
         return x, y_merged
 
