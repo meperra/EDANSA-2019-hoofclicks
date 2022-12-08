@@ -448,10 +448,10 @@ def run_exp(wandb_logger_ins):
         '1.1.8': 'grouse-ptarmigan',
         '0.2.0': 'aircraft',
         '3.0.0': 'silence',
-        'Hoofclick': '4.0.0',  #New Caribou labels
-        'Vocal': '5.0.0',
-        'Burps': '6.0.0',
-        'Chewing': '7.0.0'
+        '4.0.0': 'Hoofclick',
+        '5.0.0': 'Vocal',
+        '6.0.0': 'Burps',
+        '7.0.0': 'Chewing',
     }
     target_taxo_names = [
         target_taxo_names[taxo_code] for taxo_code in target_taxo
