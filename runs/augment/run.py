@@ -52,7 +52,7 @@ def prepare_dataset(dataset_in_memory=True, load_clipping=True):
     dataset_cache_folder = runconfigs.DATASET_CACHE_FOLDER
     target_taxo = runconfigs.TARGET_TAXO
 
-    audio_dataset, deleted_files = megantaxo.preparedataset.run(  # type: ignore
+    audio_dataset, deleted_files = edansa.preparedataset.run(  # type: ignore
         dataset_csv_path,
         taxonomy_file_path,
         ignore_files,
