@@ -156,7 +156,7 @@ def split_train_test_val(x_data, onehot_encoded, data_by_reference=False):
 
     X_train, X_test, y_train, y_test = train_test_split(x_data,
                                                         onehot_encoded,
-                                                        test_size=0.7,
+                                                        test_size=0.4,
                                                         random_state=42)
 
     X_train, X_val, y_train, y_val = train_test_split(X_train,
