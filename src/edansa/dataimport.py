@@ -140,7 +140,7 @@ class Audio():
         region = row['region'].strip().lower()
         self.location_id = site_id
         self.region = region
-        self.data_version = row['batch']
+        self.data_version = row.get('batch', None)
         # self.annotator = row['Annotator']
         # self.comments = row['Comments']
         # self.original_recording_path = row['File Name']
