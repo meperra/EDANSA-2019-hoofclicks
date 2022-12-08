@@ -484,11 +484,14 @@ class AugmentingAudioDataset(Dataset):
     def merge_samples(self, id_1, id_2, non_associative_labels=None):
         left_y = self.y[id_1]  # type: ignore
         right_y = self.y[id_2]  # type: ignore
+        try:
+            left = self.get_x(id_1)
+            right = self.get_x(id_2)
 
-        left = self.get_x(id_1)
-        right = self.get_x(id_2)
-
-        x = (left + right) / 2
+            x = (left + right) / 2
+        except:
+            print(self.X[id_1].path)
+            print(self.X[id_2].path)
 
         y_merged = left_y + right_y
         # if only one of them is 1 then y is one anyway
