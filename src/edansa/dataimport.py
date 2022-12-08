@@ -3,12 +3,14 @@
 '''
 from argparse import ArgumentError
 from typing import Dict, Union, Optional, Type, List
+from copy import deepcopy
 
 from pathlib import Path
 from collections.abc import MutableMapping
 from collections import Counter
 
 import numpy as np
+import yaml
 
 from datetime import datetime
 import csv
@@ -147,9 +149,17 @@ class Audio():
         self.timestamps = (start_time, end_time)
 
         if excell_names2code is not None:
-            taxonomy_codes = edansa.taxoutils.megan_excell_row2yaml_code(
-                row, excell_names2code, version=version)
-            self.taxo_codes = taxonomy_codes
+            self.headers2taxo_code(row, excell_names2code)
+
+    def headers2taxo_code(self, row, excell_names2code):
+        self.taxo_y = {}
+        for header_name, taxo_code in excell_names2code.items():
+            # value is 1 or 0
+            value = row.get(header_name, None)
+            # print(class_exists_or_not)
+            self.taxo_y[taxo_code] = float(value)
+        self.taxo_codes = list(self.taxo_y.keys())
+        return self.taxo_y, self.taxo_codes
 
     def sample_count(
         self,
@@ -303,6 +313,8 @@ class Dataset(MutableMapping):
         data_dict=None,
         excell_names2code=None,
         dataset_folder=None,
+        taxonomy_file_path=None,
+        target_taxo=None,
     ):
         self.store = dict()
         if data_dict is not None:
@@ -313,6 +325,8 @@ class Dataset(MutableMapping):
         self.excell_names2code = excell_names2code
         self.csv_path_or_rows = csv_path_or_rows
         self.dataset_folder = dataset_folder
+        self.target_taxo = target_taxo
+
         if dataset_cache_folder == '':
             self.dataset_cache_folder = ''
         else:
@@ -323,6 +337,8 @@ class Dataset(MutableMapping):
                           self.dataset_cache_folder,
                           excell_names2code=self.excell_names2code,
                           dataset_folder=self.dataset_folder)
+        if taxonomy_file_path is not None:
+            self.load_taxonomyfile(taxonomy_file_path)
 
     def __getitem__(self, key):
         return self.store[self._keytransform(key)]
@@ -341,6 +357,15 @@ class Dataset(MutableMapping):
 
     def _keytransform(self, key):
         return key
+
+    def load_taxonomyfile(self, taxonomy_file_path):
+        # Store taxonomy information in the dataset.
+        # Taxonomy file
+        taxonomy_file_path = Path(taxonomy_file_path)
+        with open(taxonomy_file_path) as f:
+            taxonomy = yaml.load(f, Loader=yaml.FullLoader)
+
+        self.taxonomy = edansa.taxoutils.Taxonomy(deepcopy(taxonomy))
 
     def load_csv(self,
                  csv_path_or_rows,
@@ -468,9 +493,8 @@ class Dataset(MutableMapping):
         for key, value in self.store.items():
             data = cached_dict.get(str(value.path), None)
             if data is None:
-                sound_array, sr = nna.clippingutils.load_audio(value.path,
-                                                               dtype=dtype,
-                                                               backend='pydub')
+                sound_array, sr = edansa.clippingutils.load_audio(
+                    value.path, dtype=dtype, backend='pydub')
             else:
                 sound_array, sr = data
 

@@ -50,8 +50,9 @@ def prepare_dataset(dataset_in_memory=True, load_clipping=True):
     excell_names2code = runconfigs.EXCELL_NAMES2CODE
     dataset_name_v = runconfigs.DATASET_NAME_V
     dataset_cache_folder = runconfigs.DATASET_CACHE_FOLDER
+    target_taxo = runconfigs.TARGET_TAXO
 
-    audio_dataset, deleted_files = edansa.preparedataset.run(  # type: ignore
+    audio_dataset, deleted_files = megantaxo.preparedataset.run(  # type: ignore
         dataset_csv_path,
         taxonomy_file_path,
         ignore_files,
@@ -62,8 +63,8 @@ def prepare_dataset(dataset_in_memory=True, load_clipping=True):
         dataset_name_v=dataset_name_v,
         dataset_cache_folder=dataset_cache_folder,
         load_clipping=load_clipping,
-        dataset_folder=runconfigs.DATASET_FOLDER,
-    )
+        target_taxo=target_taxo)
+
     if dataset_in_memory:
         audio_dataset.load_audio_files(runconfigs.AUDIO_DATA_CACHE_PATH)
     # audio_dataset.pick_channel_by_clipping()
@@ -390,38 +391,7 @@ def run_exp(wandb_logger_ins):
                    [('prudhoe', '12'), ('prudhoe', '27'), ('prudhoe', '26'),
                     ('anwr', '45'), ('anwr', '50'), ('prudhoe', '18'),
                     ('anwr', '32'), ('anwr', '36')]]
-    target_taxo = [
-        # '1.0.0', '1.1.0', '1.1.10', '1.1.7', '0.0.0', '1.3.0', '1.1.8', '0.2.0',
-        # '3.0.0',
-        '4.0.0',
-        '5.0.0',
-        '6.0.0',
-        '7.0.0'
-    ]
-    target_taxo_names = {
-        '1.0.0': 'biophony',
-        '1.1.0': 'bird',
-        '1.1.10': 'songbirds',
-        '1.1.7': 'duck-goose-swan',
-        '0.0.0': 'anthrophony',
-        '1.3.0': 'insect',
-        '1.1.8': 'grouse-ptarmigan',
-        '0.2.0': 'aircraft',
-        '3.0.0': 'silence',
-        '4.0.0': 'Hoofclick',
-        '5.0.0': 'Vocal',
-        '6.0.0': 'Burps',
-        '7.0.0': 'Chewing',
-    }
-    target_taxo_names = [
-        target_taxo_names[taxo_code] for taxo_code in target_taxo
-    ]
 
-    # label indexs we cannot mix with other labels
-    if ['3.0.0'] in target_taxo:
-        non_associative_labels = [target_taxo.index(i) for i in ['3.0.0']]
-    else:
-        non_associative_labels = []
     # geo_labels = [target_taxo.index(i) for i in ['2.0.0', '2.1.0', '2.3.0']]
 
     # 0.0.0 anthrophony
@@ -441,6 +411,19 @@ def run_exp(wandb_logger_ins):
         audio_dataset, _ = prepare_dataset(dataset_in_memory=True,
                                            load_clipping=True)
 
+    # reverse dict excell_names2code
+    taxo2name = {v: k for k, v in audio_dataset.excell_names2code.items()}
+
+    target_taxo_names = [
+        taxo2name[taxo_code] for taxo_code in audio_dataset.target_taxo
+    ]
+    # label indexs we cannot mix with other labels
+    if ['3.0.0'] in audio_dataset.target_taxo:
+        non_associative_labels = [
+            audio_dataset.target_taxo.index(i) for i in ['3.0.0']
+        ]
+    else:
+        non_associative_labels = []
     # if not config['mix_channels'] and not runconfigs.DATA_FROM_DISK:
     #     audio_dataset.pick_channel_by_clipping()
     print('Generating samples')
@@ -468,7 +451,8 @@ def run_exp(wandb_logger_ins):
     x_data, y_data, location_id_info = put_samples_into_array(
         audio_dataset, data_by_reference=DATA_BY_REFERENCE)
 
-    multi_label_vector = create_multi_label_vector(target_taxo, y_data)
+    multi_label_vector = create_multi_label_vector(audio_dataset.target_taxo,
+                                                   y_data)
 
     # if config['FLIP_Y_BY_SHAPLEY']:
     #     flip_index = target_taxo.index('1.1.10')

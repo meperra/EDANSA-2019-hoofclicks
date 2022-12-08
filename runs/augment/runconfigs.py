@@ -131,3 +131,18 @@ EXCELL_NAMES2CODE = {
     'Burps': '6.0.0',
     'Chewing': '7.0.0'
 }
+
+#
+TARGET_TAXO = [  # '1.0.0', '1.1.0', '1.1.10', '1.1.7', '0.0.0', '1.3.0', '1.1.8', '0.2.0',
+    # '3.0.0',
+    '4.0.0',
+    '5.0.0',
+    '6.0.0',
+    '7.0.0'
+]
+
+CATEGORY_COUNT = len(
+    TARGET_TAXO)  #10  #  remove aircraft from original 9 and add geo,rain,wind
+# reverse dictionary
+CODE2EXCELL_NAMES = {v: k for k, v in EXCELL_NAMES2CODE.items()}
+print([CODE2EXCELL_NAMES[x] for x in TARGET_TAXO])

@@ -32,7 +32,16 @@ def load_file_info2dataset(dataset_rows,
     """
     # src_path = '/scratch/enis/data/nna/labeling/megan/AudioSamplesPerSite/'
     # ffp = src_path + 'meganLabeledFiles_wlenV1.txt'
-    audio_dataset = dataimport.Dataset()
+
+    audio_dataset = dataimport.Dataset(
+        dataset_rows,
+        dataset_name_v=dataset_name_v,
+        excerpt_len=excerpt_length,
+        dataset_cache_folder=dataset_cache_folder,
+        excell_names2code=excell_names2code,
+        taxonomy_file_path=taxonomy_file_path,
+        target_taxo=target_taxo,
+    )
 
     audio_dataset.load_csv(dataset_rows,
                            dataset_name_v=dataset_name_v,
@@ -239,12 +248,18 @@ def run(
     version='V2',
     load_clipping=True,
     dataset_folder=None,
+    target_taxo=None,
 ):
-
-    dataset_rows = load_csv(dataset_csv_path)
-    audio_dataset = load_file_info2dataset(dataset_rows, dataset_name_v,
-                                           dataset_cache_folder, dataset_folder)
-
+    megan_data_sheet = load_csv(dataset_csv_path)
+    audio_dataset = dataimport.Dataset(
+        megan_data_sheet,
+        dataset_name_v=dataset_name_v,
+        excerpt_len=excerpt_length,
+        dataset_cache_folder=dataset_cache_folder,
+        excell_names2code=excell_names2code,
+        taxonomy_file_path=taxonomy_file_path,
+        target_taxo=target_taxo,
+    )
     megan_data_sheet, deleted_files = load_labeled_info(
         dataset_rows, audio_dataset, ignore_files=ignore_files)
 
