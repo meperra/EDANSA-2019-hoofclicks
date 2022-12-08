@@ -64,7 +64,7 @@ def prepare_dataset(dataset_in_memory=True, load_clipping=True):
         dataset_name_v=dataset_name_v,
         dataset_cache_folder=dataset_cache_folder,
         load_clipping=load_clipping,
-        target_taxo=target_taxo
+        target_taxo=target_taxo,
         dataset_folder=dataset_folder)
 
     if dataset_in_memory:
