@@ -1,9 +1,9 @@
-'0': 
-    '0.0':
+"0":
+    "0.0":
         0.0.0:
             - other-anthrophony # Anth
-    '0.1': 
-        0.1.0: 
+    "0.1":
+        0.1.0:
             - other-auto # Auto
         0.1.1:
             - truck # Truck
@@ -11,7 +11,7 @@
             - car # car
         0.1.X:
             - unknown-auto
-    '0.2': # aircraft, airc
+    "0.2": # aircraft, airc
         0.2.0:
             - other-aircraft # Airc
         0.2.1:
@@ -22,21 +22,21 @@
             - commercial-plane # Jet
         0.2.X:
             - unknown-aircraft
-    '0.3': # Machinery
+    "0.3": # Machinery
         0.3.0:
             - other-machinery # Mach
         0.3.X:
             - unknown-machinery
-    '0.4': # Flare
+    "0.4": # Flare
         0.4.0:
             - other-flare # Flare
         0.4.X:
             - unknown-flare
-'1':
-    '1.0':
-        1.0.0: 
+"1":
+    "1.0":
+        1.0.0:
             - other-biophony # Bio
-    '1.1': 
+    "1.1":
         1.1.0:
             - other-bird # Bird
         1.1.1:
@@ -56,7 +56,7 @@
         1.1.8:
             - grouse-ptarmigan # Grous
         1.1.9:
-            -  woodpecker # Woop
+            - woodpecker # Woop
         1.1.10:
             - songbirds #SongB
         1.1.11:
@@ -65,7 +65,7 @@
             - corvids # Corv
         1.1.X:
             - unknown-bird
-    '1.2':
+    "1.2":
         1.2.0:
             - other-mammal
         1.2.1:
@@ -86,7 +86,7 @@
             - shrews # Shrew
         1.2.X:
             - unknown-mammal
-    '1.3': # Insect
+    "1.3": # Insect
         1.3.0:
             - other-insect
         1.3.1:
@@ -97,39 +97,39 @@
             - bee # Bee
         1.3.X:
             - unknown-insect
-    '1.X':
+    "1.X":
         1.X.X:
             - unknown-biophony
-'2':
-    '2.0':
+"2":
+    "2.0":
         2.0.0:
             - other-geology
-    '2.1':
+    "2.1":
         2.1.0:
             - other-rain
         2.1.X:
             - unknown-rain
-    '2.2':
+    "2.2":
         2.2.0:
             - other-water
         2.2.X:
             - unknown-water
-    '2.3':
+    "2.3":
         2.3.0:
             - other-wind # Wind
         2.3.X:
             - unknown-wind
-    '2.X':
+    "2.X":
         2.X.X:
             - unknown-geology
-'3':
-    '3.0':
+"3":
+    "3.0":
         3.0.0:
             - other-silence # Sil
-    '3.X':
+    "3.X":
         3.X.X:
             - unknown-silence
-'X':
-    'X.X':
+"X":
+    "X.X":
         X.X.X:
             - unknown-sound
