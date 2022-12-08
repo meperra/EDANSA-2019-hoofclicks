@@ -149,17 +149,9 @@ class Audio():
         self.timestamps = (start_time, end_time)
 
         if excell_names2code is not None:
-            self.headers2taxo_code(row, excell_names2code)
-
-    def headers2taxo_code(self, row, excell_names2code):
-        self.taxo_y = {}
-        for header_name, taxo_code in excell_names2code.items():
-            # value is 1 or 0
-            value = row.get(header_name, None)
-            # print(class_exists_or_not)
-            self.taxo_y[taxo_code] = float(value)
-        self.taxo_codes = list(self.taxo_y.keys())
-        return self.taxo_y, self.taxo_codes
+            taxonomy_codes = edansa.taxoutils.megan_excell_row2yaml_code(
+                row, excell_names2code, version=version)
+            self.taxo_codes = taxonomy_codes
 
     def sample_count(
         self,
