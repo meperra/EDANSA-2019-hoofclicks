@@ -129,6 +129,34 @@
     "3.X":
         3.X.X:
             - unknown-silence
+"4":
+    "4.0":
+        4.0.0:
+            - other-hoofclick # Sil
+    "4.X":
+        4.X.X:
+            - unknown-hoofclick
+"5":
+    "5.0":
+        5.0.0:
+            - other-vocal # Sil
+    "5.X":
+        5.X.X:
+            - unknown-vocal
+"6":
+    "6.0":
+        6.0.0:
+            - other-burps # Sil
+    "6.X":
+        6.X.X:
+            - unknown-burps
+"7":
+    "7.0":
+        7.0.0:
+            - other-chewing # Sil
+    "7.X":
+        7.X.X:
+            - unknown-chewing
 "X":
     "X.X":
         X.X.X:
