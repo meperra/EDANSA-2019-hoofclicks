@@ -143,18 +143,18 @@ setup(
     # if you like to know exact enviroment of the project, check the file:
     # conda_env_snapshot.yml
     install_requires=[
-        'PyYAML>=5',
-        'torch==1.7.1',
-        'torchaudio==0.7.2',
-        'pytorch-ignite==0.4.2',
-        'torchvision==0.8.2',
-        'pydub==0.23.1',
-        'scikit-learn==0.24.2',
-        'audiomentations==0.17.0',
-        'librosa==0.8.0',
-        'matplotlib==3.3.2',
-        'numpy==1.19.2',
-        'wandb==0.10.15',
+        'PyYAML',
+        'torch',
+        'torchaudio',
+        'pytorch-ignite',
+        'torchvision',
+        'pydub',
+        'scikit-learn',
+        'audiomentations',
+        'librosa',
+        'matplotlib',
+        'numpy',
+        'wandb',
     ],  # Optional
 
     # List additional groups of dependencies here (e.g. development
