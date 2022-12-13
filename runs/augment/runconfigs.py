@@ -45,7 +45,7 @@ TAXO_COUNT_LIMIT = 0
 #   we get 5 samples and 4 seconds is ignored
 SAMPLE_LENGTH_LIMIT = 2
 SAMPLES_FIXED_SIZE = True
-DATA_FROM_DISK = True
+DATA_FROM_DISK = False
 if not SAMPLES_FIXED_SIZE and DATA_FROM_DISK:
     raise ValueError('Cannot use DATA_FROM_DISK without SAMPLES_FIXED_SIZE')
 
